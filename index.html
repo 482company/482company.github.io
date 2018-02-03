@@ -23,17 +23,80 @@
       ga('create', 'UA-98266785-1', 'auto');
       ga('send', 'pageview');
     </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script>
+    var jokes = [
+		{
+			"q" : "What do knights wear to protect them at night?",
+			"a" : "A knight guard."
+		},
+		{
+			"q" : "What was the most bug like band?",
+			"a" : "The Beatles"
+		},
+		{
+			"q" : "What do you call a skunk's helicopter?",
+			"a" : "a smellycopter"
+		},
+		{
+			"q" : "What is black and white and read all over?",
+			"a" : "a newspaper"
+		},
+		{
+			"q" : "What do you call a sweet and edible fish?",
+			"a" : "Because it had a little too much gas"
+		},
+		{
+			"q" : "Why did the football coach go to the bank?",
+			"a" : "to get his quarterback"
+		}
+    ];
+    $(document).ready(function() {
+		var jokeCount = jokes.length;
+    	    var currentJokeIndex = -1;
+    		$("#jokebutton").click(function(event) {
+    			event.preventDefault();
+    			var jokeIndex;
+    			do {
+    				jokeIndex = Math.floor(Math.random() * jokeCount);
+    			} while (jokeCount > 1 && jokeIndex == currentJokeIndex)
+    			currentJokeIndex = jokeIndex;
+    			var joke = jokes[jokeIndex];
+    			$("#question").html("<strong>Q:</strong> " + joke["q"]);
+    			$("#answer").html("<strong>A:</strong> " + joke["a"]);
+    		});
+    	});
+    </script>
   </head>
   <body>
     <div class="container">
         <div class="text-center">
             <h1>482 Company</h1>
             <h1><i class="fa fa-smile-o fa-5x" aria-hidden="true"></i></h1>
-            <h2>Ever heard any great jokes?</h2>
+            <h2>Ever heard any great jokes, buddy?</h2>
+            
+            <br>
+            <br>
+
+            <button id="jokebutton">Click here for a joke</button>
+            
+            <br>
+            <br>
+            
+            <div id="question"></div>
+
+            <br>
+
+            <div id="answer"></div>
+            
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
             &copy;2017 482 Company 
         </div>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     </div>
   </body>
 </html>
