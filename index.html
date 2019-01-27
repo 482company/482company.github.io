@@ -26,51 +26,42 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     <script>
-    var jokes = [
-		{
-			"q" : "What do knights wear to protect them at night?",
-			"a" : "A knight guard."
-		},
-		{
-			"q" : "What was the most bug like band?",
-			"a" : "The Beatles"
-		},
-		{
-			"q" : "What do you call a skunk's helicopter?",
-			"a" : "a smellycopter"
-		},
-		{
-			"q" : "What is black and white and read all over?",
-			"a" : "A newspaper"
-		},
-		{
-			"q" : "What do you call a sweet and edible fish?",
-			"a" : "A jellyfish"
-		},
-		{
-			"q" : "Why did the car backfire?",
-			"a" : "Because it had a little too much gas"
-		},
-		{
-			"q" : "Why did the football coach go to the bank?",
-			"a" : "To get his quarterback"
-		}
-    ];
     $(document).ready(function() {
-		var jokeCount = jokes.length;
-    	    var currentJokeIndex = -1;
-    		$("#jokebutton").click(function(event) {
-    			event.preventDefault();
-    			var jokeIndex;
-    			do {
-    				jokeIndex = Math.floor(Math.random() * jokeCount);
-    			} while (jokeCount > 1 && jokeIndex == currentJokeIndex)
-    			currentJokeIndex = jokeIndex;
-    			var joke = jokes[jokeIndex];
-    			$("#question").html("<strong>Q:</strong> " + joke["q"]);
-    			$("#answer").html("<strong>A:</strong> " + joke["a"]);
-    		});
-    	});
+        $("#jokebutton").click(function(event) {
+            event.preventDefault();
+            $.ajax("https://www.reddit.com/r/jokes/random/.json")
+            .done(function(result) {
+                var title = getProperty(result, "title");
+                var selftext = getProperty(result, "selftext");
+                var author = getProperty(result, "author");
+                var authorUrl = "https://www.reddit.com/user/" + author;
+                var sourceUrl = "https://www.reddit.com" + getProperty(result, "permalink");
+                $("#title").html(title);
+                $("#selftext").html(selftext);
+                $("#author").html("Original Author: <a href=\"" + authorUrl + "\">" + author + "</a>");
+                $("#source").html("Original Source: <a href=\"" + sourceUrl + "\">" + sourceUrl + "</a>");
+            })
+            .fail(function(result) {
+                alert("Something went wrong. Please try again");
+            });
+        });
+    });
+    function getProperty(object, propertyName) {
+            if (typeof object == "object" && object !== null) {
+                for (var property in object) {
+                    if (object.hasOwnProperty(property)) {
+                        if (property == propertyName) {
+                            return object[property];
+                        }
+                        var result = getProperty(object[property], propertyName);
+                        if (result != null) {
+                            return result;
+                        }
+                    }
+                }
+            }
+            return null;
+    }
     </script>
   </head>
   <body>
@@ -85,21 +76,21 @@
 
             <button id="jokebutton">Click here for a joke</button>
             
-            <br>
-            <br>
-            
-            <div id="question"></div>
+            <h3 id="title"></h3>
+
+            <h3 id="selftext"></h3>
 
             <br>
 
-            <div id="answer"></div>
-            
+            <div id="author"></div>
+            <div id="source"></div>
+
             <br>
             <br>
             <br>
-            <br>
-            <br>
-            &copy;2017 482 Company 
+
+            <div>All jokes are randomly selected from <a href="https://www.reddit.com/r/Jokes">https://www.reddit.com/r/Jokes</a>.</div>
+            &copy;2019 482 Company
         </div>
     </div>
   </body>
