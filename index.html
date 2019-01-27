@@ -44,7 +44,7 @@
         $("#jokebutton").click(function(event) {
             event.preventDefault();
             $.ajax({
-                url: "https://www.reddit.com/r/jokes/random/.json",
+                url: "https://www.reddit.com/r/kidjokes/random/.json",
                 beforeSend: function() {
                     $("#jokebutton").attr("disabled", "disabled");
                     $("#title").html("");
@@ -118,7 +118,7 @@
             <br>
             <br>
 
-            <div>All jokes are randomly selected from <a href="https://www.reddit.com/r/Jokes">https://www.reddit.com/r/Jokes</a>.</div>
+            <div>All jokes are randomly selected from <a href="https://www.reddit.com/r/kidjokes">https://www.reddit.com/r/kidjokes</a>.</div>
             &copy;2019 482 Company
         </div>
     </div>
